@@ -35,6 +35,13 @@ app.get("/", async (req, res) => {
     })
 });
 
+app.get("/api/v1/route2",async(req,res)=>{
+    res.status(200).json({
+        status:"success",
+        msg : "Home router"
+    })
+})
+
 
 // auth routes 
 
