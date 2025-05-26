@@ -32,7 +32,26 @@ const createTodo = async (req, res) => {
     }
 };
 
+const findAllTodo = async (req, res) => {
+    try {
+        const todos = await todoModel
+            .find()
+            .sort({ createdAt: -1 }) // Sort by latest
+            .populate("userId", "name"); // Join with user name
+
+        res.status(200).json({
+            status: "success",
+            mes: "All todo fetch successfully",
+            data: todos
+        });
+    } catch (error) {
+        console.error("Error fetching todos:", error);
+        res.status(500).json({ message: "Something went wrong" });
+    }
+};
+
 
 module.exports = {
-    createTodo
+    createTodo,
+    findAllTodo
 }
