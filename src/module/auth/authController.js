@@ -192,8 +192,30 @@ const loginUser = async (req, res) => {
 };
 
 
+const userProfile = async (req, res) => {
+    const id = req.headers.id;
+    console.log(id)
+    try {
+        const filter = {
+            _id: id
+        }
+        const data = await UserModel.findOne(filter);
+        return res.status(200).json({
+            status: "success",
+            data: data,
+            message: "User Profile Retrive successfully"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            status:"fail",
+            msg : "Something went wrong"
+        })
+    }
+}
+
 module.exports = {
     register,
     verifyOTP,
-    loginUser
+    loginUser,
+    userProfile
 }
