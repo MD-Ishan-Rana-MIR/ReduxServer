@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { default: mongoose } = require("mongoose");
 const router = require("./src/module/auth/authApi");
+const todoRouter = require("./src/module/todo/todoApi");
 require("dotenv").config()
 const app = new express();
 
@@ -44,8 +45,9 @@ app.get("/api/v1/route2",async(req,res)=>{
 
 
 // auth routes 
-
-app.use("/api/v1/auth", router)
+app.use("/api/v1/auth", router);
+// todo api
+app.use("/api/v1/todo", todoRouter )
 
 
 

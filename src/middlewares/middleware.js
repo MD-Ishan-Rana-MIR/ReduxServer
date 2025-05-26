@@ -14,7 +14,6 @@ const verifyToken = (req, res, next) => {
 
         // Verify token
         const decoded = jwt.verify(token, process.env.JWTKEY);
-        console.log(decoded);
         const id = decoded.id;
         req.headers.id = id
 
