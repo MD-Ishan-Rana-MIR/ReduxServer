@@ -69,16 +69,12 @@ const todoByUser = async (req, res) => {
             .find(filter)
             .sort({ createdAt: -1 })
             .populate("userId", "name");
-
-        console.log(data)
-
         return res.status(200).json({
             status: "success",
             data,
             msg: "User task find by successfully",
         });
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             status: "fail",
             msg: "Something went wrong",
