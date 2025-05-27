@@ -1,11 +1,12 @@
 const express = require("express");
 const verifyToken = require("../../middlewares/middleware");
-const { createTodo, findAllTodo } = require("./todoController");
+const { createTodo, findAllTodo, todoByUser } = require("./todoController");
 
 const todoRouter = express.Router();
 
 todoRouter.post("/createTodo", verifyToken, createTodo);
-todoRouter.get("/all-todo", findAllTodo )
+todoRouter.get("/all-todo", findAllTodo);
+todoRouter.get("/todo-byUser", verifyToken, todoByUser);
 
 
-module.exports = todoRouter
+module.exports = todoRouter;

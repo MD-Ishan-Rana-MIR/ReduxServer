@@ -51,7 +51,30 @@ const findAllTodo = async (req, res) => {
 };
 
 
+const todoByUser = async (req, res) => {
+    try {
+        const id = req.headers.id;
+        const filter = {
+            userId: id
+        };
+        const data = await todoModel.find(filter).sort({ createAt: -1 }).populate("userId", "name");
+        return res.status(200).json({
+            status: "success",
+            data: data,
+            msg: "User task find by successfully"
+        });
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            status: "fail",
+            msg: "Something went wrong"
+        })
+    }
+};
+
+
 module.exports = {
     createTodo,
-    findAllTodo
+    findAllTodo,
+    todoByUser
 }
