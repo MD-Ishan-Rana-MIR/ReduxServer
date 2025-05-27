@@ -70,7 +70,7 @@ const todoByUser = async (req, res) => {
             .sort({ createdAt: -1 })
             .populate("userId", "name");
 
-            console.log(data)
+        console.log(data)
 
         return res.status(200).json({
             status: "success",
@@ -87,8 +87,48 @@ const todoByUser = async (req, res) => {
 };
 
 
+const todoStatusUpdate = async (req, res) => {
+    try {
+        const userId = req.headers.id;        // from headers
+        const status = req.body.status;       // new status
+        const todoId = req.params.id;         // from URL
+
+        const filter = {
+            userId: userId,
+            _id: todoId,
+        };
+
+        const updateTodo = await todoModel.findOneAndUpdate(
+            filter,
+            { status },
+            { new: true } // return updated document
+        );
+
+        if (!updateTodo) {
+            return res.status(404).json({
+                status: "fail",
+                msg: "Todo not found or unauthorized",
+            });
+        }
+
+        return res.status(200).json({
+            status: "success",
+            msg: "Todo status updated successfully",
+            data: updateTodo,
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            status: "fail",
+            msg: "Something went wrong",
+        });
+    }
+};
+
+
 module.exports = {
     createTodo,
     findAllTodo,
-    todoByUser
+    todoByUser,
+    todoStatusUpdate
 }
